@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hendawi World</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center;
+  background: #050505; color: #00ff88; font-family: monospace; padding: 24px;
+}
+main {
+  width: 100%; max-width: 400px; text-align: center;
+  border: 1px solid #00ff8844; border-radius: 18px;
+  padding: 30px 22px; box-shadow: 0 0 30px #00ff8815;
+}
+h1 { text-shadow: 0 0 15px #00ff88; }
+p { color: #aaa; }
+input, button {
+  width: 100%; padding: 14px; margin-top: 12px;
+  border-radius: 8px; font: inherit;
+}
+input { background: #111; color: white; border: 1px solid #00ff88; }
+button { background: #00ff88; color: #050505; border: 0; font-weight: bold; }
+#welcome { margin-top: 28px; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<main>
+<h1>HENDAWI WORLD 🌍</h1>
+<p>Enter your name to continue</p>
+<form id="nameForm">
+<input id="name" type="text" placeholder="Your name..." maxlength="40" required>
+<button type="submit">Enter World</button>
+</form>
+<h2 id="welcome" aria-live="polite"></h2>
+</main>
+<script>
+document.getElementById('nameForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  if (!name) return;
+  document.getElementById('welcome').textContent =
+    'Welcome, ' + name + ' Hendawi 🌍';
+});
+</script>
+</body>
+</html>
