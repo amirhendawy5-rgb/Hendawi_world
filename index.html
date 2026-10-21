@@ -870,7 +870,13 @@ video.vyro-media {width:min(100%,440px);background:#000}
       'conversations/' + activeChatId + '/messages'
     ).push();
 
-    await messageRef.set(message);
+    try {
+  await messageRef.set(message);
+  status('تم حفظ الرسالة، جاري تحديث المحادثة...');
+} catch (error) {
+  status('فشل حفظ الرسالة: ' + error.code + ' — ' + error.message);
+  throw error;
+}
 
     const chatId = activeChatId;
     const otherUid = activeOther.uid;
@@ -885,8 +891,12 @@ video.vyro-media {width:min(100%,440px);background:#000}
     updates['userChats/' + user.uid + '/' + chatId + '/lastMessage'] = preview;
     updates['userChats/' + otherUid + '/' + chatId + '/lastMessage'] = preview;
 
-    await db.ref().update(updates);
-    status('تم إرسال الملف بنجاح.');
+    try {
+  await db.ref().update(updates);
+} catch (error) {
+  status('الرسالة اتحفظت لكن تحديث المحادثة فشل: ' + error.code);
+  throw error;
+}
   }
 
   byId('vyroFileInput').addEventListener('change', async event => {
