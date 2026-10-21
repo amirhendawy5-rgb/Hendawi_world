@@ -488,4 +488,428 @@ async function claimHendawiUsername() {
   alert('تم ربط اسم المستخدم: ' + result.username);
 }
 </script>
+
+<!-- VYRO THEMES + CLOUDINARY MEDIA + VOICE RECORDING -->
+<style>
+:root {
+  --vyro-bg:#07111f;
+  --vyro-panel:#101d30;
+  --vyro-accent:#36c8ff;
+  --vyro-border:#25445f;
+}
+body[data-vyro-theme="cyber-blue"] {
+  --vyro-bg:#06111f;--vyro-panel:#102139;
+  --vyro-accent:#36c8ff;--vyro-border:#285d85;
+}
+body[data-vyro-theme="neon-green"] {
+  --vyro-bg:#07140f;--vyro-panel:#0e2017;
+  --vyro-accent:#39ff88;--vyro-border:#1b6b3a;
+}
+body[data-vyro-theme="violet-galaxy"] {
+  --vyro-bg:#11091f;--vyro-panel:#211331;
+  --vyro-accent:#c78bff;--vyro-border:#65418a;
+}
+body[data-vyro-theme="crimson-red"] {
+  --vyro-bg:#1b080d;--vyro-panel:#301018;
+  --vyro-accent:#ff647c;--vyro-border:#813044;
+}
+body[data-vyro-theme="midnight-dark"] {
+  --vyro-bg:#08090d;--vyro-panel:#15171e;
+  --vyro-accent:#d1d5e0;--vyro-border:#393d49;
+}
+body[data-vyro-theme] {
+  background:var(--vyro-bg)!important;
+  color:#f2f5ff;
+}
+body[data-vyro-theme] header,
+body[data-vyro-theme] .panel,
+body[data-vyro-theme] .sidebar,
+body[data-vyro-theme] .conversation {
+  background-color:var(--vyro-panel)!important;
+  border-color:var(--vyro-border)!important;
+}
+body[data-vyro-theme] h1,
+body[data-vyro-theme] h2,
+body[data-vyro-theme] .who {
+  color:var(--vyro-accent)!important;
+}
+body[data-vyro-theme] button {
+  border-color:var(--vyro-border);
+}
+body[data-vyro-theme] button:hover {
+  filter:brightness(1.18);
+}
+#vyroUpgradeTools {
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  padding:10px;border-bottom:1px solid var(--vyro-border);
+}
+#vyroTheme {
+  flex:1;min-width:145px;max-width:230px;
+  padding:9px;border-radius:9px;
+  background:var(--vyro-panel);color:inherit;
+  border:1px solid var(--vyro-border);
+}
+#vyroMediaStatus {
+  width:100%;font-size:12px;color:var(--vyro-accent);
+  overflow-wrap:anywhere;
+}
+.vyro-media-button {padding:9px 12px!important}
+.vyro-media {
+  display:block;max-width:100%;height:auto;
+  max-height:360px;border-radius:12px;margin-top:8px;
+}
+audio.vyro-media {width:min(100%,340px)}
+video.vyro-media {width:min(100%,440px);background:#000}
+.vyro-media-link {
+  display:inline-block;margin-top:8px;color:var(--vyro-accent);
+  overflow-wrap:anywhere;
+}
+.vyro-media-name {font-size:12px;opacity:.8;margin-top:5px}
+#vyroFileInput {display:none!important}
+@media(max-width:500px) {
+  #vyroUpgradeTools {gap:6px}
+  .vyro-media-button {padding:8px!important;font-size:12px}
+}
+</style>
+
+<div id="vyroUpgradeTools">
+  <label for="vyroTheme">🎨 Theme</label>
+  <select id="vyroTheme" aria-label="Choose theme">
+    <option value="cyber-blue">Cyber Blue</option>
+    <option value="neon-green">Neon Green</option>
+    <option value="violet-galaxy">Violet Galaxy</option>
+    <option value="crimson-red">Crimson Red</option>
+    <option value="midnight-dark">Midnight Dark</option>
+  </select>
+
+  <input id="vyroFileInput" type="file"
+    accept="image/*,video/*,audio/*,.pdf,.txt,.doc,.docx"
+    aria-label="Choose media file">
+
+  <button id="vyroChooseMedia" class="vyro-media-button" type="button">
+    📎 Media
+  </button>
+  <button id="vyroRecordAudio" class="vyro-media-button" type="button">
+    🎙️ Record voice
+  </button>
+  <button id="vyroStopAudio" class="vyro-media-button" type="button" hidden>
+    ⏹ Stop & Send
+  </button>
+  <div id="vyroMediaStatus" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // Cloudinary settings already configured for this project.
+  const CLOUD_NAME = 'vygi3u8y';
+  const UPLOAD_PRESET = 'vyro_upload';
+  const THEME_KEY = 'vyroTheme';
+
+  const byId = id => document.getElementById(id);
+  const status = message => {
+    byId('vyroMediaStatus').textContent = message || '';
+  };
+
+  // Themes: save the selection on this device.
+  const themeSelect = byId('vyroTheme');
+  const validThemes = [
+    'cyber-blue','neon-green','violet-galaxy',
+    'crimson-red','midnight-dark'
+  ];
+
+  function applyTheme(theme) {
+    if (!validThemes.includes(theme)) theme = 'cyber-blue';
+    document.body.dataset.vyroTheme = theme;
+    themeSelect.value = theme;
+    try { localStorage.setItem(THEME_KEY, theme); } catch (_) {}
+  }
+
+  let savedTheme = 'cyber-blue';
+  try { savedTheme = localStorage.getItem(THEME_KEY) || savedTheme; }
+  catch (_) {}
+  applyTheme(savedTheme);
+
+  themeSelect.addEventListener('change', () => {
+    applyTheme(themeSelect.value);
+  });
+
+  // Add the tools above the actual chat composer.
+  const chatForm = byId('form');
+  if (chatForm) {
+    chatForm.parentNode.insertBefore(
+      byId('vyroUpgradeTools'), chatForm
+    );
+  }
+
+  byId('vyroChooseMedia').addEventListener('click', () => {
+    byId('vyroFileInput').click();
+  });
+
+  let recorder = null;
+  let recordedChunks = [];
+  let recordingStream = null;
+  let recordingBusy = false;
+
+  function getCurrentChat() {
+    if (typeof user === 'undefined' || !user ||
+        typeof db === 'undefined' || !db) {
+      throw new Error('سجّل الدخول الأول.');
+    }
+    if (typeof activeChatId === 'undefined' || !activeChatId ||
+        typeof activeOther === 'undefined' || !activeOther) {
+      throw new Error('افتح محادثة خاصة الأول.');
+    }
+  }
+
+  async function uploadToCloudinary(file) {
+    if (!file) throw new Error('مفيش ملف متحدد.');
+    if (file.size > 100 * 1024 * 1024) {
+      throw new Error('حجم الملف أكبر من 100 MB.');
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', UPLOAD_PRESET);
+
+    status('جاري رفع الملف...');
+
+    const response = await fetch(
+      'https://api.cloudinary.com/v1_1/' +
+      CLOUD_NAME + '/auto/upload',
+      { method:'POST', body:formData }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.secure_url) {
+      throw new Error(
+        result.error?.message || 'فشل رفع الملف إلى Cloudinary.'
+      );
+    }
+
+    if (!result.secure_url.startsWith('https://res.cloudinary.com/')) {
+      throw new Error('رابط الملف المُرجع غير متوقع.');
+    }
+
+    return {
+      url:result.secure_url,
+      name:String(file.name || 'media').slice(0,180),
+      mime:String(file.type || 'application/octet-stream').slice(0,100),
+      size:file.size
+    };
+  }
+
+  async function sendMedia(file) {
+    getCurrentChat();
+    if (recordingBusy) throw new Error('انتظر انتهاء العملية الحالية.');
+
+    const uploaded = await uploadToCloudinary(file);
+    const type = file.type.startsWith('image/') ? 'image' :
+      file.type.startsWith('video/') ? 'video' :
+      file.type.startsWith('audio/') ? 'audio' : 'file';
+
+    const message = {
+      uid:user.uid,
+      name:displayName || 'VYRO User',
+      text:'',
+      createdAt:firebase.database.ServerValue.TIMESTAMP,
+      media:{
+        type:type,
+        url:uploaded.url,
+        name:uploaded.name,
+        mime:uploaded.mime,
+        size:uploaded.size
+      }
+    };
+
+    status('جاري إرسال الرسالة...');
+    const messageRef = db.ref(
+      'conversations/' + activeChatId + '/messages'
+    ).push();
+
+    await messageRef.set(message);
+
+    const chatId = activeChatId;
+    const otherUid = activeOther.uid;
+    const preview = type === 'image' ? '📷 Image' :
+      type === 'video' ? '🎬 Video' :
+      type === 'audio' ? '🎙️ Audio' : '📎 File';
+
+    const updates = {};
+    const stamp = Date.now();
+    updates['userChats/' + user.uid + '/' + chatId + '/updatedAt'] = stamp;
+    updates['userChats/' + otherUid + '/' + chatId + '/updatedAt'] = stamp;
+    updates['userChats/' + user.uid + '/' + chatId + '/lastMessage'] = preview;
+    updates['userChats/' + otherUid + '/' + chatId + '/lastMessage'] = preview;
+
+    await db.ref().update(updates);
+    status('تم إرسال الملف بنجاح.');
+  }
+
+  byId('vyroFileInput').addEventListener('change', async event => {
+    const file = event.target.files && event.target.files[0];
+    event.target.value = '';
+    if (!file) return;
+
+    try {
+      await sendMedia(file);
+    } catch (error) {
+      status('تعذر الإرسال: ' + error.message);
+    }
+  });
+
+  // Extend the existing renderer without replacing its reply/reaction logic.
+  if (typeof renderMessage === 'function') {
+    const originalRenderMessage = renderMessage;
+
+    renderMessage = function (id, message) {
+      originalRenderMessage(id, message);
+
+      if (!message || !message.media) return;
+
+      const boxes = document.querySelectorAll('[data-message-id]');
+      let box = null;
+      boxes.forEach(item => {
+        if (item.dataset.messageId === id) box = item;
+      });
+      if (!box) return;
+
+      const media = message.media;
+      if (!media.url ||
+          !media.url.startsWith('https://res.cloudinary.com/')) return;
+
+      const area = document.createElement('div');
+      area.className = 'vyro-media-area';
+
+      if (media.type === 'image') {
+        const img = document.createElement('img');
+        img.className = 'vyro-media';
+        img.src = media.url;
+        img.alt = media.name || 'Shared image';
+        img.loading = 'lazy';
+        img.addEventListener('click', () => {
+          window.open(media.url, '_blank', 'noopener,noreferrer');
+        });
+        area.appendChild(img);
+      } else if (media.type === 'video') {
+        const video = document.createElement('video');
+        video.className = 'vyro-media';
+        video.src = media.url;
+        video.controls = true;
+        video.preload = 'metadata';
+        area.appendChild(video);
+      } else if (media.type === 'audio') {
+        const audio = document.createElement('audio');
+        audio.className = 'vyro-media';
+        audio.src = media.url;
+        audio.controls = true;
+        audio.preload = 'metadata';
+        area.appendChild(audio);
+      } else {
+        const link = document.createElement('a');
+        link.className = 'vyro-media-link';
+        link.href = media.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = '📎 ' + (media.name || 'Open file');
+        area.appendChild(link);
+      }
+
+      const name = document.createElement('div');
+      name.className = 'vyro-media-name';
+      name.textContent = media.name || '';
+      area.appendChild(name);
+
+      box.appendChild(area);
+    };
+  }
+
+  async function startRecording() {
+    getCurrentChat();
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia ||
+        typeof MediaRecorder === 'undefined') {
+      throw new Error('المتصفح لا يدعم تسجيل الصوت. جرّب Chrome عبر HTTPS.');
+    }
+
+    recordingStream = await navigator.mediaDevices.getUserMedia({audio:true});
+    recordedChunks = [];
+
+    let options = {};
+    if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+      options.mimeType = 'audio/webm;codecs=opus';
+    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+      options.mimeType = 'audio/webm';
+    }
+
+    recorder = new MediaRecorder(recordingStream, options);
+    recorder.addEventListener('dataavailable', event => {
+      if (event.data && event.data.size) recordedChunks.push(event.data);
+    });
+
+    recorder.addEventListener('stop', async () => {
+      try {
+        const blob = new Blob(recordedChunks, {
+          type:recorder.mimeType || 'audio/webm'
+        });
+
+        if (blob.size) {
+          const extension = blob.type.includes('ogg') ? 'ogg' :
+            blob.type.includes('mp4') ? 'm4a' : 'webm';
+          const audioFile = new File(
+            [blob],
+            'VYRO-voice-' + Date.now() + '.' + extension,
+            {type:blob.type || 'audio/webm'}
+          );
+          await sendMedia(audioFile);
+        } else {
+          status('التسجيل فارغ؛ جرّب مرة تانية.');
+        }
+      } catch (error) {
+        status('تعذر إرسال التسجيل: ' + error.message);
+      } finally {
+        if (recordingStream) {
+          recordingStream.getTracks().forEach(track => track.stop());
+        }
+        recordingStream = null;
+        recorder = null;
+        recordedChunks = [];
+        recordingBusy = false;
+        byId('vyroRecordAudio').hidden = false;
+        byId('vyroStopAudio').hidden = true;
+      }
+    });
+
+    recorder.start();
+    recordingBusy = true;
+    byId('vyroRecordAudio').hidden = true;
+    byId('vyroStopAudio').hidden = false;
+    status('🔴 التسجيل شغال. اضغط Stop & Send لما تخلص.');
+  }
+
+  byId('vyroRecordAudio').addEventListener('click', async () => {
+    try {
+      await startRecording();
+    } catch (error) {
+      if (recordingStream) {
+        recordingStream.getTracks().forEach(track => track.stop());
+      }
+      recordingStream = null;
+      recordingBusy = false;
+      status('تعذر بدء التسجيل: ' + error.message);
+    }
+  });
+
+  byId('vyroStopAudio').addEventListener('click', () => {
+    if (recorder && recorder.state !== 'inactive') {
+      status('تم إيقاف التسجيل؛ جاري رفعه وإرساله...');
+      recorder.stop();
+    }
+  });
+})();
+</script>
+<!-- END VYRO UPGRADE -->
 </body></html>
