@@ -870,11 +870,11 @@ video.vyro-media {width:min(100%,440px);background:#000}
       'conversations/' + activeChatId + '/messages'
     ).push();
 
-    try {
+   try {
   await messageRef.set(message);
   status('تم حفظ الرسالة، جاري تحديث المحادثة...');
 } catch (error) {
-  status('فشل حفظ الرسالة: ' + error.code + ' — ' + error.message);
+  status('فشل حفظ الرسالة: ' + (error.code || '') + ' — ' + error.message);
   throw error;
 }
 
@@ -893,8 +893,9 @@ video.vyro-media {width:min(100%,440px);background:#000}
 
     try {
   await db.ref().update(updates);
+  status('تم إرسال الملف بنجاح.');
 } catch (error) {
-  status('الرسالة اتحفظت لكن تحديث المحادثة فشل: ' + error.code);
+  status('فشل تحديث المحادثة: ' + (error.code || '') + ' — ' + error.message);
   throw error;
 }
   }
