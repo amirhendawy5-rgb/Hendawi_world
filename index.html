@@ -1014,7 +1014,11 @@ video.vyro-media {width:min(100%,440px);background:#000}
   status('التسجيل فارغ؛ جرّب مرة تانية.');
 }
       } catch (error) {
-        status('تعذر إرسال التسجيل: ' + error.message);
+        status(
+  'تعذر إرسال التسجيل: ' +
+  (error.code || error.name || 'UNKNOWN') +
+  ' — ' + error.message
+);
       } finally {
         if (recordingStream) {
           recordingStream.getTracks().forEach(track => track.stop());
