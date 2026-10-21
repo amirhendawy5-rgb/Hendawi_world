@@ -148,6 +148,102 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:s
 .vyro-dialog .primary{background:linear-gradient(110deg,#7868d7,#427fc6)}
 .vyro-dialog .danger{background:#612e4d}
 .vyro-settings-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.vyro-settings-tabs {
+  display:flex;
+  gap:7px;
+  margin:0 0 18px;
+  padding-bottom:10px;
+  border-bottom:1px solid #7874b755;
+}
+.vyro-settings-tab {
+  flex:1;
+  min-width:0;
+  padding:10px 7px!important;
+  border-radius:10px;
+  background:#171b36!important;
+  color:#dfe4ff!important;
+  font-size:12px;
+}
+.vyro-settings-tab.active {
+  background:linear-gradient(110deg,#7868d7,#427fc6)!important;
+  border-color:#a995ff!important;
+}
+.vyro-settings-page[hidden] {
+  display:none!important;
+}
+.vyro-settings-page h3 {
+  margin:4px 0 10px;
+  color:#a995ff;
+}
+.vyro-appearance-note {
+  font-size:12px;
+  line-height:1.6;
+  color:#bfc5e8;
+}
+.vyro-dialog #vyroTheme {
+  display:block;
+  width:100%;
+  max-width:none;
+  margin:4px 0 10px;
+  padding:12px;
+  border-radius:10px;
+  background:#151a34;
+  color:#fff;
+  border:1px solid #787ad1;
+  font:inherit;
+}
+.vyro-settings-footer {
+  display:flex;
+  justify-content:flex-end;
+  margin-top:18px;
+  padding-top:12px;
+  border-top:1px solid #7874b755;
+}
+.vyro-settings-tab {
+  flex:1;
+  min-width:0;
+  padding:10px 7px!important;
+  border-radius:10px;
+  background:#171b36!important;
+  color:#dfe4ff!important;
+  font-size:12px;
+}
+.vyro-settings-tab.active {
+  background:linear-gradient(110deg,#7868d7,#427fc6)!important;
+  border-color:#a995ff!important;
+}
+.vyro-settings-page[hidden] {
+  display:none!important;
+}
+.vyro-settings-page h3 {
+  margin:4px 0 10px;
+  color:#a995ff;
+}
+.vyro-appearance-note {
+  font-size:12px;
+  line-height:1.6;
+  color:#bfc5e8;
+}
+.vyro-dialog #vyroTheme {
+  display:block;
+  width:100%;
+  max-width:none;
+  margin:4px 0 10px;
+  padding:12px;
+  border-radius:10px;
+  background:#151a34;
+  color:#fff;
+  border:1px solid #787ad1;
+  font:inherit;
+}
+.vyro-settings-footer {
+  display:flex;
+  justify-content:flex-end;
+  margin-top:18px;
+  padding-top:12px;
+  border-top:1px solid #7874b755;
+}
+
 .vyro-avatar{width:76px;height:76px;border-radius:50%;object-fit:cover;background:#333d70;border:2px solid #a995ff}
 #vyroSettingsStatus{font-size:12px;color:#c4d5ff;white-space:pre-wrap;margin-top:10px}
 @media(max-width:749px){
@@ -159,26 +255,64 @@ header{padding:12px}
 }
 </style>
 
+
 <div id="vyroSettingsModal" class="vyro-modal hidden" role="dialog" aria-modal="true" aria-labelledby="vyroSettingsTitle">
   <div class="vyro-dialog">
     <h2 id="vyroSettingsTitle">⚙ Account Settings</h2>
-    <img id="vyroAvatarPreview" class="vyro-avatar" alt="Profile picture">
-    <label for="vyroUsername">Display name</label>
-    <input id="vyroUsername" maxlength="24" placeholder="Your name">
-    <label for="vyroBio">Bio</label>
-    <textarea id="vyroBio" maxlength="160" placeholder="Tell people about yourself"></textarea>
-    <label for="vyroPhoto">Profile picture URL (HTTPS)</label>
-    <input id="vyroPhoto" type="url" placeholder="https://example.com/photo.jpg">
-    <div class="vyro-settings-row">
-      <button id="vyroSaveSettings" class="primary" type="button">Save Profile</button>
+
+    <div class="vyro-settings-tabs" role="tablist">
+      <button type="button" class="vyro-settings-tab active" data-settings-tab="profile" role="tab" aria-selected="true">👤 Profile</button>
+      <button type="button" class="vyro-settings-tab" data-settings-tab="appearance" role="tab" aria-selected="false">🎨 Appearance</button>
+      <button type="button" class="vyro-settings-tab" data-settings-tab="account" role="tab" aria-selected="false">🔐 Account</button>
+    </div>
+
+    <section class="vyro-settings-page" data-settings-page="profile" role="tabpanel">
+      <img id="vyroAvatarPreview" class="vyro-avatar" alt="Profile picture">
+
+      <label for="vyroUsername">Display name</label>
+      <input id="vyroUsername" maxlength="24" placeholder="Your name">
+
+      <label for="vyroBio">Bio</label>
+      <textarea id="vyroBio" maxlength="160" placeholder="Tell people about yourself"></textarea>
+
+      <label for="vyroPhoto">Profile picture URL (HTTPS)</label>
+      <input id="vyroPhoto" type="url" placeholder="https://example.com/photo.jpg">
+
+      <div class="vyro-settings-row">
+        <button id="vyroSaveSettings" class="primary" type="button">Save Profile</button>
+      </div>
+    </section>
+
+    <section class="vyro-settings-page" data-settings-page="appearance" role="tabpanel" hidden>
+      <h3>Appearance &amp; Themes</h3>
+      <p class="vyro-appearance-note">Choose a look for your VYRO app. Your choice is saved on this device.</p>
+
+      <label for="vyroTheme">Choose theme</label>
+      <select id="vyroTheme" aria-label="Choose theme">
+        <option value="cyber-blue">Cyber Blue</option>
+        <option value="neon-green">Neon Green</option>
+        <option value="violet-galaxy">Violet Galaxy</option>
+        <option value="crimson-red">Crimson Red</option>
+        <option value="midnight-dark">Midnight Dark</option>
+      </select>
+
+      <p class="vyro-appearance-note">The theme updates the app immediately.</p>
+    </section>
+
+    <section class="vyro-settings-page" data-settings-page="account" role="tabpanel" hidden>
+      <h3>Manage Account</h3>
+      <p style="font-size:12px;color:#bfc5e8">Your login email is managed by Firebase Authentication.</p>
+
+      <div class="vyro-settings-row">
+        <button id="vyroResetPassword" type="button">Reset Password</button>
+        <button id="vyroLogout" class="danger" type="button">Log Out</button>
+      </div>
+    </section>
+
+    <div class="vyro-settings-footer">
       <button id="vyroCloseSettings" type="button">Close</button>
     </div>
-    <h2 style="margin-top:22px">Manage Account</h2>
-    <p style="font-size:12px;color:#bfc5e8">Your login email is managed by Firebase Authentication.</p>
-    <div class="vyro-settings-row">
-      <button id="vyroResetPassword" type="button">Reset Password</button>
-      <button id="vyroLogout" class="danger" type="button">Log Out</button>
-    </div>
+
     <p id="vyroSettingsStatus" role="status"></p>
   </div>
 </div>
@@ -317,7 +451,21 @@ async function openSettings(){
     showStatus('Could not load profile: '+e.message);
   }
 }
+document.querySelectorAll('[data-settings-tab]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.settingsTab;
 
+    document.querySelectorAll('[data-settings-tab]').forEach(item => {
+      const active = item === tab;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('[data-settings-page]').forEach(page => {
+      page.hidden = page.dataset.settingsPage !== target;
+    });
+  });
+});
 byId('settingsBtn').addEventListener('click',openSettings);
 byId('vyroCloseSettings').addEventListener('click',()=>{
   settingsModal.classList.add('hidden');
@@ -573,15 +721,7 @@ video.vyro-media {width:min(100%,440px);background:#000}
 </style>
 
 <div id="vyroUpgradeTools">
-  <label for="vyroTheme">🎨 Theme</label>
-  <select id="vyroTheme" aria-label="Choose theme">
-    <option value="cyber-blue">Cyber Blue</option>
-    <option value="neon-green">Neon Green</option>
-    <option value="violet-galaxy">Violet Galaxy</option>
-    <option value="crimson-red">Crimson Red</option>
-    <option value="midnight-dark">Midnight Dark</option>
-  </select>
-
+  
   <input id="vyroFileInput" type="file"
     accept="image/*,video/*,audio/*,.pdf,.txt,.doc,.docx"
     aria-label="Choose media file">
