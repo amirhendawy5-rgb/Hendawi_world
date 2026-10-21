@@ -841,10 +841,11 @@ video.vyro-media {width:min(100%,440px);background:#000}
     };
   }
 
-  async function sendMedia(file) {
+  async function sendMedia(file, fromRecording = false) {
     getCurrentChat();
-    if (recordingBusy) throw new Error('انتظر انتهاء العملية الحالية.');
-
+    if (recordingBusy && !fromRecording) {
+      throw new Error('انتظر انتهاء العملية الحالية.');
+    }
     const uploaded = await uploadToCloudinary(file);
     const type = file.type.startsWith('image/') ? 'image' :
       file.type.startsWith('video/') ? 'video' :
@@ -997,17 +998,21 @@ video.vyro-media {width:min(100%,440px);background:#000}
         });
 
         if (blob.size) {
-          const extension = blob.type.includes('ogg') ? 'ogg' :
-            blob.type.includes('mp4') ? 'm4a' : 'webm';
-          const audioFile = new File(
-            [blob],
-            'VYRO-voice-' + Date.now() + '.' + extension,
-            {type:blob.type || 'audio/webm'}
-          );
-          await sendMedia(audioFile);
-        } else {
-          status('التسجيل فارغ؛ جرّب مرة تانية.');
-        }
+  const extension = blob.type.includes('ogg') ? 'ogg' :
+    blob.type.includes('mp4') ? 'm4a' : 'webm';
+
+  const audioFile = new File(
+    [blob],
+    'VYRO-voice-' + Date.now() + '.' + extension,
+    {type:blob.type || 'audio/webm'}
+  );
+
+  // Release the recording lock before uploading the voice message.
+  recordingBusy = false;
+  await sendMedia(audioFile, true);
+} else {
+  status('التسجيل فارغ؛ جرّب مرة تانية.');
+}
       } catch (error) {
         status('تعذر إرسال التسجيل: ' + error.message);
       } finally {
