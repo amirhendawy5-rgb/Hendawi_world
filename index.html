@@ -952,13 +952,28 @@ video.vyro-media {width:min(100%,440px);background:#000}
         video.controls = true;
         video.preload = 'metadata';
         area.appendChild(video);
-      } else if (media.type === 'audio') {
-        const audio = document.createElement('audio');
-        audio.className = 'vyro-media';
-        audio.src = media.url;
-        audio.controls = true;
-        audio.preload = 'metadata';
-        area.appendChild(audio);
+} else if (media.type === 'audio') {
+  const audio = document.createElement('audio');
+  audio.className = 'vyro-media';
+  audio.controls = true;
+  audio.preload = 'metadata';
+  audio.setAttribute('playsinline', '');
+  audio.style.display = 'block';
+  audio.style.width = '100%';
+  audio.style.minWidth = '220px';
+  audio.style.maxWidth = '320px';
+  audio.style.marginTop = '8px';
+
+  audio.src = media.url;
+  audio.load();
+
+  audio.addEventListener('error', () => {
+    console.error('VYRO audio playback error:', audio.error, media.url);
+  });
+
+  area.appendChild(audio);
+}
+
       } else {
         const link = document.createElement('a');
         link.className = 'vyro-media-link';
