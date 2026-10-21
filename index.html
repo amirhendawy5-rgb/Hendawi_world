@@ -157,75 +157,6 @@ header{padding:12px}
 #notifyBtn{font-size:10px;padding:8px}
 #chatTitle::before{content:'‹ Back   '!important}
 }
-/* VYRO theme chooser */
-.vyro-theme-section{margin-top:22px;padding-top:18px;border-top:1px solid #7874b733}
-.vyro-theme-section h3{margin:0 0 6px;font-size:16px}
-.vyro-theme-section p{font-size:12px;color:#bfc5e8;margin:0 0 12px}
-.vyro-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.vyro-theme-option{display:flex;align-items:center;gap:9px;text-align:left;min-width:0;padding:10px!important;border-radius:13px!important;background:#171c35!important;border:1px solid #525b83!important;color:#f6f4ff!important}
-.vyro-theme-option[aria-pressed="true"]{border:2px solid var(--theme-accent,#a995ff)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--theme-accent,#a995ff) 20%,transparent)}
-.vyro-theme-swatch{width:32px;height:32px;flex:0 0 32px;border-radius:10px;border:1px solid #ffffff44}
-.vyro-theme-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
-.vyro-theme-copy strong{font-size:12px;line-height:1.2}
-.vyro-theme-copy small{font-size:10px;color:#bdc6e4}
-.vyro-theme-check{margin-left:auto;color:var(--theme-accent,#a995ff);font-weight:900}
-@media(max-width:380px){.vyro-theme-grid{grid-template-columns:1fr}}
-
-/* Theme palettes. Applied to the full existing interface. */
-html[data-vyro-theme="cyber-blue"]{--theme-accent:#78baff;--theme-accent2:#477ee8;--theme-page:#0b1427;--theme-header:#111e35;--theme-panel:rgba(20,31,57,.94);--theme-sidebar:#111f38;--theme-chat:#0d1930;--theme-bubble:#263b59;--theme-mine:#315c9a;--theme-border:#526b9a55;--theme-text:#f1f6ff;--theme-muted:#aabbd8;--theme-input:#172743}
-html[data-vyro-theme="neon-green"]{--theme-accent:#39ff88;--theme-accent2:#128b53;--theme-page:#07140f;--theme-header:#091a12;--theme-panel:rgba(12,31,21,.95);--theme-sidebar:#0d2117;--theme-chat:#081a11;--theme-bubble:#173626;--theme-mine:#145c38;--theme-border:#2da65a55;--theme-text:#eafff0;--theme-muted:#9ab5a3;--theme-input:#10251a}
-html[data-vyro-theme="violet-galaxy"]{--theme-accent:#a995ff;--theme-accent2:#5b8dff;--theme-page:#101226;--theme-header:#1c1b3b;--theme-panel:rgba(21,25,49,.92);--theme-sidebar:#11182f;--theme-chat:#0f142a;--theme-bubble:#292d50;--theme-mine:#51428b;--theme-border:#777fba55;--theme-text:#f2f1ff;--theme-muted:#aeb7dc;--theme-input:#171c38}
-html[data-vyro-theme="crimson-red"]{--theme-accent:#ff667d;--theme-accent2:#b52f55;--theme-page:#190d17;--theme-header:#29101f;--theme-panel:rgba(42,19,34,.95);--theme-sidebar:#24111e;--theme-chat:#180e1b;--theme-bubble:#452337;--theme-mine:#852d4b;--theme-border:#c75a7a55;--theme-text:#fff0f4;--theme-muted:#d2a8b6;--theme-input:#301627}
-html[data-vyro-theme="midnight-dark"]{--theme-accent:#c4cbd7;--theme-accent2:#707b91;--theme-page:#090b10;--theme-header:#10131a;--theme-panel:rgba(20,23,31,.96);--theme-sidebar:#11141b;--theme-chat:#0b0e14;--theme-bubble:#252a34;--theme-mine:#3c4656;--theme-border:#8b98ad44;--theme-text:#f2f4f8;--theme-muted:#a5afbf;--theme-input:#171b24}
-
-html[data-vyro-theme] body{background:var(--theme-page);color:var(--theme-text)}
-html[data-vyro-theme] header{background:var(--theme-header);border-bottom-color:var(--theme-border)}
-html[data-vyro-theme] .panel,
-html[data-vyro-theme] .sidebar,
-html[data-vyro-theme] .conversation{background:var(--theme-panel);border-color:var(--theme-border)}
-html[data-vyro-theme] h2{color:var(--theme-text);border-bottom-color:var(--theme-border)}
-html[data-vyro-theme] header h1{color:var(--theme-text)}
-html[data-vyro-theme] .vyro-mark{background:linear-gradient(135deg,var(--theme-accent),var(--theme-accent2))}
-html[data-vyro-theme] #status{background:var(--theme-panel);color:var(--theme-accent);border-color:var(--theme-border)}
-html[data-vyro-theme] .navtabs{background:var(--theme-sidebar)}
-html[data-vyro-theme] .navtabs button{color:var(--theme-muted)}
-html[data-vyro-theme] .navtabs button.active{background:linear-gradient(120deg,var(--theme-accent2),var(--theme-accent));color:#fff}
-html[data-vyro-theme] .chatitem:hover,
-html[data-vyro-theme] .person:hover{background:color-mix(in srgb,var(--theme-accent) 10%,transparent)}
-html[data-vyro-theme] .chatitem:before,
-html[data-vyro-theme] .person:before{background:linear-gradient(145deg,var(--theme-accent2),var(--theme-accent))}
-html[data-vyro-theme] .chatitem button,
-html[data-vyro-theme] .person button{background:var(--theme-panel);color:var(--theme-accent);border:1px solid var(--theme-border)}
-html[data-vyro-theme] .unread-badge{background:var(--theme-accent);color:var(--theme-page)}
-html[data-vyro-theme] .conversation h2{background:var(--theme-header)}
-html[data-vyro-theme] .conversation #messages{background-color:var(--theme-chat)}
-html[data-vyro-theme] .msg{background:var(--theme-bubble);color:var(--theme-text)}
-html[data-vyro-theme] .msg.mine{background:var(--theme-mine)}
-html[data-vyro-theme] .msg .who{color:var(--theme-accent)}
-html[data-vyro-theme] .msg .time,
-html[data-vyro-theme] .chat-preview,
-html[data-vyro-theme] footer{color:var(--theme-muted)}
-html[data-vyro-theme] .composer{background:var(--theme-header);border-top-color:var(--theme-border)}
-html[data-vyro-theme] .composer input,
-html[data-vyro-theme] input,
-html[data-vyro-theme] .vyro-dialog input,
-html[data-vyro-theme] .vyro-dialog textarea{background:var(--theme-input);color:var(--theme-text);border-color:var(--theme-border)}
-html[data-vyro-theme] .composer button{background:var(--theme-accent);color:var(--theme-page)}
-html[data-vyro-theme] .composer .emoji-toggle{background:var(--theme-panel)!important;color:var(--theme-text);border-color:var(--theme-border)!important}
-html[data-vyro-theme] .actions button,
-html[data-vyro-theme] .reaction-btn{background:var(--theme-panel)!important;color:var(--theme-text)!important;border-color:var(--theme-border)!important}
-html[data-vyro-theme] .reaction-btn.selected{border-color:var(--theme-accent)!important}
-html[data-vyro-theme] input:focus{outline-color:var(--theme-accent)}
-html[data-vyro-theme] .replyref,
-html[data-vyro-theme] .forwardref{border-left-color:var(--theme-accent)}
-html[data-vyro-theme] .sky-overlay{opacity:.55}
-html[data-vyro-theme="neon-green"] .sky-overlay{opacity:.18}
-html[data-vyro-theme="midnight-dark"] .sky-overlay{opacity:.08}
-html[data-vyro-theme] .vyro-dialog{background:linear-gradient(150deg,var(--theme-panel),var(--theme-page));border-color:var(--theme-border)}
-html[data-vyro-theme] .vyro-dialog button{background:var(--theme-panel);color:var(--theme-text);border-color:var(--theme-border)}
-html[data-vyro-theme] .vyro-dialog button.primary{background:linear-gradient(110deg,var(--theme-accent2),var(--theme-accent));color:var(--theme-page)}
-html[data-vyro-theme] .vyro-theme-option[aria-pressed="true"]{--theme-accent:var(--theme-accent)}
-/* End VYRO theme chooser CSS */
 </style>
 
 <div id="vyroSettingsModal" class="vyro-modal hidden" role="dialog" aria-modal="true" aria-labelledby="vyroSettingsTitle">
@@ -242,38 +173,6 @@ html[data-vyro-theme] .vyro-theme-option[aria-pressed="true"]{--theme-accent:var
       <button id="vyroSaveSettings" class="primary" type="button">Save Profile</button>
       <button id="vyroCloseSettings" type="button">Close</button>
     </div>
-<div class="vyro-theme-section">
-  <h3>🎨 App Appearance</h3>
-  <p>Choose a theme. Your choice is saved on this device.</p>
-  <div class="vyro-theme-grid" id="vyroThemeGrid">
-    <button type="button" class="vyro-theme-option" data-vyro-theme-choice="cyber-blue" aria-pressed="false">
-      <span class="vyro-theme-swatch" style="background:linear-gradient(135deg,#0b1427,#78baff)"></span>
-      <span class="vyro-theme-copy"><strong>Cyber Blue</strong><small>Blue • Night</small></span>
-      <span class="vyro-theme-check" aria-hidden="true">✓</span>
-    </button>
-    <button type="button" class="vyro-theme-option" data-vyro-theme-choice="neon-green" aria-pressed="false">
-      <span class="vyro-theme-swatch" style="background:linear-gradient(135deg,#07140f,#39ff88)"></span>
-      <span class="vyro-theme-copy"><strong>Neon Green</strong><small>Green • Cyber</small></span>
-      <span class="vyro-theme-check" aria-hidden="true">✓</span>
-    </button>
-    <button type="button" class="vyro-theme-option" data-vyro-theme-choice="violet-galaxy" aria-pressed="false">
-      <span class="vyro-theme-swatch" style="background:linear-gradient(135deg,#101226,#a995ff)"></span>
-      <span class="vyro-theme-copy"><strong>Violet Galaxy</strong><small>Purple • Space</small></span>
-      <span class="vyro-theme-check" aria-hidden="true">✓</span>
-    </button>
-    <button type="button" class="vyro-theme-option" data-vyro-theme-choice="crimson-red" aria-pressed="false">
-      <span class="vyro-theme-swatch" style="background:linear-gradient(135deg,#190d17,#ff667d)"></span>
-      <span class="vyro-theme-copy"><strong>Crimson Red</strong><small>Red • Dark</small></span>
-      <span class="vyro-theme-check" aria-hidden="true">✓</span>
-    </button>
-    <button type="button" class="vyro-theme-option" data-vyro-theme-choice="midnight-dark" aria-pressed="false">
-      <span class="vyro-theme-swatch" style="background:linear-gradient(135deg,#090b10,#c4cbd7)"></span>
-      <span class="vyro-theme-copy"><strong>Midnight Dark</strong><small>Black • Minimal</small></span>
-      <span class="vyro-theme-check" aria-hidden="true">✓</span>
-    </button>
-  </div>
-  <div id="vyroThemeStatus" role="status" style="font-size:12px;color:#bfc5e8;margin-top:10px"></div>
-</div>
     <h2 style="margin-top:22px">Manage Account</h2>
     <p style="font-size:12px;color:#bfc5e8">Your login email is managed by Firebase Authentication.</p>
     <div class="vyro-settings-row">
@@ -292,14 +191,301 @@ document.documentElement.lang='en';
 document.documentElement.dir='ltr';
 
 const byId=id=>document.getElementById(id);
+const originalHeader=document.querySelector('body > header');
 
-const VYRO_THEME_KEY='vyro-theme-preference';
-const VYRO_THEMES=['cyber-blue','neon-green','violet-galaxy','crimson-red','midnight-dark'];
+if(originalHeader){
+  const heading=originalHeader.querySelector('h1');
+  const subtitle=originalHeader.querySelector('p');
+  if(heading){
+    const brand=document.createElement('div');
+    brand.className='vyro-brand';
+    const mark=document.createElement('div');
+    mark.className='vyro-mark';
+    mark.textContent='V';
+    const titles=document.createElement('div');
+    heading.textContent='VYRO';
+    titles.appendChild(heading);
+    if(subtitle){
+      subtitle.textContent='Your World. Your People.';
+      titles.appendChild(subtitle);
+    }
+    brand.append(mark,titles);
+    originalHeader.prepend(brand);
+  }
 
-function applyVyroTheme(theme,save=true){
-  const chosen=VYRO_THEMES.includes(theme)?theme:'cyber-blue';
-  document.documentElement.dataset.vyroTheme=chosen;
-  document.querySelectorAll('[data-vyro-theme-choice]').forEach(button=>{
-    const active=button.dataset.vyroThemeChoice===chosen;
-    button.setAttribute('aria-pressed',String(active));
-    const check=button.querySe
+  const actions=document.createElement('div');
+  actions.className='vyro-header-actions';
+
+  const settings=document.createElement('button');
+  settings.id='settingsBtn';
+  settings.type='button';
+  settings.textContent='⚙';
+  settings.title='Account Settings';
+  settings.setAttribute('aria-label','Account Settings');
+  settings.classList.add('hidden');
+
+  const status=byId('status');
+  const notify=byId('notifyBtn');
+  if(status)actions.appendChild(status);
+  if(notify)actions.appendChild(notify);
+  actions.appendChild(settings);
+  originalHeader.appendChild(actions);
+}
+
+const staticLabels={
+  'authPanel':['Sign In'],
+  'register':['Create Account'],
+  'login':['Log In'],
+  'logout':['Log Out'],
+  'saveName':['Save Name'],
+  'cancelReply':['Cancel'],
+};
+
+Object.entries(staticLabels).forEach(([id,labels])=>{
+  const el=byId(id);
+  if(!el)return;
+  if(id==='authPanel'){
+    const h=el.querySelector('h2');
+    if(h)h.textContent='🔐 '+labels[0];
+  }else el.textContent=labels[0];
+});
+
+const placeholders={
+  email:'Email address',
+  password:'Password (at least 6 characters)',
+  name:'Display name',
+  searchPeople:'Search people...',
+  message:'Type a message...',
+  emojiSearch:'Search emojis...'
+};
+Object.entries(placeholders).forEach(([id,value])=>{
+  if(byId(id))byId(id).placeholder=value;
+});
+
+const hint=byId('authPanel')?.querySelector('.hint');
+if(hint)hint.textContent='Accounts are secured with Firebase Authentication. Never share your password.';
+
+document.querySelectorAll('[data-tab]').forEach(btn=>{
+  const labels={chats:'💬 Chats',groups:'👥 Groups',people:'👤 People'};
+  btn.textContent=labels[btn.dataset.tab]||btn.textContent;
+});
+
+const groups=byId('groups');
+if(groups)groups.innerHTML='<div class="empty"><h2>👥 Groups</h2><p>Group conversations are coming soon.</p></div>';
+
+const settingsModal=byId('vyroSettingsModal');
+const settingsStatus=byId('vyroSettingsStatus');
+const avatar=byId('vyroAvatarPreview');
+const defaultAvatar='data:image/svg+xml,'+encodeURIComponent(
+'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" rx="50" fill="#504e9d"/><text x="50" y="65" font-size="52" text-anchor="middle" fill="white">V</text></svg>'
+);
+
+avatar.src=defaultAvatar;
+
+function showStatus(message){
+  settingsStatus.textContent=message;
+}
+
+function currentUser(){
+  return window.firebase?.auth()?.currentUser||null;
+}
+
+function safePhoto(url){
+  try{
+    const parsed=new URL(url);
+    return parsed.protocol==='https:'?parsed.href:'';
+  }catch{return ''}
+}
+
+async function openSettings(){
+  const u=currentUser();
+  if(!u)return;
+  showStatus('');
+  settingsModal.classList.remove('hidden');
+  byId('vyroUsername').value=byId('name')?.value||'';
+  byId('vyroBio').value='';
+  byId('vyroPhoto').value='';
+  avatar.src=defaultAvatar;
+  try{
+    const snapshot=await firebase.database().ref('profiles/'+u.uid).once('value');
+    const profile=snapshot.val()||{};
+    byId('vyroUsername').value=profile.name||'';
+    byId('vyroBio').value=profile.bio||'';
+    byId('vyroPhoto').value=profile.photoURL||'';
+    avatar.src=safePhoto(profile.photoURL)||defaultAvatar;
+  }catch(e){
+    showStatus('Could not load profile: '+e.message);
+  }
+}
+
+byId('settingsBtn').addEventListener('click',openSettings);
+byId('vyroCloseSettings').addEventListener('click',()=>{
+  settingsModal.classList.add('hidden');
+});
+settingsModal.addEventListener('click',e=>{
+  if(e.target===settingsModal)settingsModal.classList.add('hidden');
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')settingsModal.classList.add('hidden');
+});
+
+byId('vyroPhoto').addEventListener('input',()=>{
+  avatar.src=safePhoto(byId('vyroPhoto').value)||defaultAvatar;
+});
+avatar.addEventListener('error',()=>{avatar.src=defaultAvatar});
+
+byId('vyroSaveSettings').addEventListener('click',async()=>{
+  const u=currentUser();
+  if(!u)return showStatus('Please log in first.');
+  const name=byId('vyroUsername').value.trim().replace(/\s+/g,' ').slice(0,24);
+  const bio=byId('vyroBio').value.trim().slice(0,160);
+  const rawPhoto=byId('vyroPhoto').value.trim();
+  const photoURL=safePhoto(rawPhoto);
+
+  if(!name)return showStatus('Please enter a display name.');
+  if(rawPhoto&&!photoURL)return showStatus('Photo URL must start with https://');
+
+  const button=byId('vyroSaveSettings');
+  button.disabled=true;
+  showStatus('Saving...');
+  try{
+    await firebase.database().ref('profiles/'+u.uid).update({
+      name,bio,photoURL,
+      updatedAt:firebase.database.ServerValue.TIMESTAMP
+    });
+    if(byId('name'))byId('name').value=name;
+    localStorage.setItem('hendawiName',name);
+    showStatus('Profile saved successfully.');
+  }catch(e){
+    showStatus('Save failed: '+e.message);
+  }finally{
+    button.disabled=false;
+  }
+});
+
+byId('vyroResetPassword').addEventListener('click',async()=>{
+  const u=currentUser();
+  if(!u?.email)return showStatus('No email address found.');
+  try{
+    await firebase.auth().sendPasswordResetEmail(u.email);
+    showStatus('If the email is eligible, a password reset message has been sent.');
+  }catch(e){
+    showStatus('Password reset failed: '+e.message);
+  }
+});
+
+byId('vyroLogout').addEventListener('click',async()=>{
+  try{
+    await firebase.auth().signOut();
+    location.reload();
+  }catch(e){
+    showStatus('Logout failed: '+e.message);
+  }
+});
+
+const replacements=[
+  [/^جاري التهيئة\.\.\.$/,'Connecting...'],
+  [/^سجّل الدخول بحسابك للمتابعة$/,'Sign in to continue'],
+  [/^🟢 مسجل الدخول$/,'🟢 Online'],
+  [/^تعذر الاتصال$/,'Connection failed'],
+  [/^لا توجد محادثات بعد\.$/,'No conversations yet.'],
+  [/^مفيش مستخدمين مطابقين لحد دلوقتي\.$/,'No matching people found.'],
+  [/^مراسلة$/,'Message'],
+  [/^فتح$/,'Open'],
+  [/^ابدأ المحادثة$/,'Start chatting'],
+  [/^مستخدم$/,'User'],
+  [/^رسائلك الخاصة هتظهر هنا\.$/,'Your private messages will appear here.'],
+  [/^💬 اختار شات أو ابدأ محادثة$/,'💬 Select a chat to get started'],
+  [/^محادثة خاصة مع /,'Chat with '],
+  [/^رد$/,'Reply'],
+  [/^تحويل$/,'Forward'],
+  [/^الآن$/,'Now'],
+  [/^🔔 تفعيل إشعارات الرسائل$/,'🔔 Enable Notifications'],
+  [/^🔔 الإشعارات مفعّلة$/,'🔔 Notifications On'],
+  [/^الإشعارات غير مدعومة في المتصفح$/,'Notifications unavailable'],
+  [/^الإشعارات محظورة من إعدادات المتصفح$/,'Notifications blocked']
+];
+
+function translateText(value){
+  let result=value;
+  for(const [pattern,replacement] of replacements){
+    if(pattern.test(result))result=result.replace(pattern,replacement);
+  }
+  return result;
+}
+
+let translating=false;
+function translateInterface(){
+  if(translating)return;
+  translating=true;
+  try{
+    const root=byId('chatLayout');
+    if(root){
+      const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+      const nodes=[];
+      while(walker.nextNode())nodes.push(walker.currentNode);
+      for(const node of nodes){
+        const old=node.nodeValue;
+        const next=translateText(old);
+        if(next!==old)node.nodeValue=next;
+      }
+    }
+
+    const status=byId('status');
+    if(status){
+      const next=translateText(status.textContent);
+      if(next!==status.textContent)status.textContent=next;
+    }
+    const notify=byId('notifyBtn');
+    if(notify){
+      const next=translateText(notify.textContent);
+      if(next!==notify.textContent)notify.textContent=next;
+    }
+
+    const signedIn=!!currentUser();
+    byId('settingsBtn').classList.toggle('hidden',!signedIn);
+    if(signedIn&&byId('authPanel'))byId('authPanel').classList.add('hidden');
+  }finally{
+    translating=false;
+  }
+}
+
+const observer=new MutationObserver(()=>translateInterface());
+observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+firebase.auth().onAuthStateChanged(()=>translateInterface());
+translateInterface();
+
+})();
+
+async function claimHendawiUsername() {
+  const currentUser = firebase.auth().currentUser;
+
+  if (!currentUser) {
+    alert('سجّل الدخول بحسابك القديم أولاً.');
+    return;
+  }
+
+  const idToken = await currentUser.getIdToken();
+
+  const response = await fetch(
+    'https://vyro-auth.amirhendawy5.workers.dev/claim',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: 'hendawi',
+        idToken: idToken
+      })
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'تعذر ربط اسم المستخدم.');
+  }
+
+  alert('تم ربط اسم المستخدم: ' + result.username);
+}
+</script>
+</body></html>
